@@ -45,6 +45,16 @@ Fonctionnalités :
 - Badges de statut (rendez-vous, rappels vaccinaux).
 - Expérience utilisateur soignée (états vides, feedback, animations).
 
+#### Frontend – Dashboard soignant (commit 7)
+
+- Structure HTML/CSS du tableau de bord.
+- Design inspiré du portail patient (charte graphique cohérente).
+- Zone de connexion (email / mot de passe).
+- Grille d’affichage des patientes (cartes).
+- Barre de recherche par lot de vaccin (interface).
+- Statistiques visuelles (patientes actives, urgences, dossiers critiques).
+- Composants réutilisables et adaptables (grille, badges, cartes).
+
 #### Sécurité
 
 - Mots de passe chiffrés avec bcrypt.
@@ -65,22 +75,25 @@ Fonctionnalités :
 
 ### Historique
 
-| Commit   | Description                                         |
-| -------- | --------------------------------------------------- |
-| Commit 1 | Structure SQL et données initiales                  |
-| Commit 2 | Sécurité, permissions et traçabilité                |
-| Commit 3 | API REST connectée à PostgreSQL                     |
-| Commit 4 | Authentification JWT (login, middleware)            |
-| Commit 5 | Upload de documents médicaux (multer, routes)       |
-| Commit 6 | Portail patient (HTML/CSS/JS, onglets, upload, badges) |
+| Commit   | Description                                                       |
+| -------- | ----------------------------------------------------------------- |
+| Commit 1 | Structure SQL et données initiales                                |
+| Commit 2 | Sécurité, permissions et traçabilité                              |
+| ~~Commit 3~~ | ~~API PostgreSQL~~ *(supprimé suite à une erreur de manipulation)* |
+| Commit 4 | Authentification JWT (login, middleware)                          |
+| Commit 5 | Upload de documents médicaux (multer, routes)                     |
+| Commit 6 | Portail patient (HTML/CSS/JS, onglets, upload, badges)            |
+| Commit 7 | Dashboard soignant – structure HTML/CSS (inspirée du portail)     |
+
+> **Note** : Le commit 3 a été perdu lors d’une manipulation Git. L’ensemble de ses fonctionnalités (connexion DB, routes patients) est présent et opérationnel dans les commits 4, 5 et 6. Aucune régression n’est à signaler.
 
 ---
 
 ### État actuel
 
-**Statut :** Base de données terminée, API REST complète, portail patient opérationnel.
+**Statut :** Base de données terminée, API REST complète, portail patient opérationnel, structure du dashboard soignant prête.
 
-**Progression estimée :** 85 %
+**Progression estimée :** 88 %
 
 ---
 
@@ -103,9 +116,15 @@ MaterniteCare/
 │   │   └── style.css
 │   ├── js/
 │   │   └── portail.js
-│   └── portail.html
+│   ├── portail.html
+│   └── dashboard/
+│       ├── index.html
+│       ├── css/
+│       │   └── style.css
+│       └── js/
+│           └── dashboard.js
 │
 ├── docs/
 │   └── pg_connection.png
 │
-└── README.md
+└── README.md  
