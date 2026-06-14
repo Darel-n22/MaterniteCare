@@ -213,3 +213,43 @@ button:active { transform: scale(0.99); }
     .container { padding: 16px; }
     .stats-row { flex-direction: column; }
 }
+/* Cartes améliorées */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.critical-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 20px;
+    width: 32px;
+}
+.critical-active {
+    background: #ffeb3b;
+    border-radius: 20px;
+}
+.card-meta {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.details-btn {
+    background: var(--info);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 20px;
+    margin-top: 8px;
+    cursor: pointer;
+    width: 100%;
+}
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: var(--ink-soft);
+}
