@@ -47,25 +47,30 @@ Fonctionnalités :
 
 #### Frontend – Dashboard soignant
 
-**Commit 7 – Structure HTML/CSS**
+**Commits 7 et 8 – Structure et connexion**
 
 - Structure HTML/CSS du tableau de bord.
 - Design inspiré du portail patient (charte graphique cohérente).
-- Zone de connexion (email / mot de passe).
-- Grille d’affichage des patientes (cartes).
-- Barre de recherche par lot de vaccin (interface).
-- Statistiques visuelles (patientes actives, urgences, dossiers critiques).
+- Connexion JWT avec stockage du token dans `localStorage`.
+- Récupération et affichage de la liste des patientes.
+- Injection dynamique des cartes patientes (nom, dossier, quartier, niveau de risque).
 
-**Commit 8 – Connexion JWT et affichage des patientes**
+**Commit 9 – Amélioration des cartes, statistiques et marquage critique**
 
-- Intégration de l’API d’authentification (`POST /api/auth/login`).
-- Stockage du token JWT dans `localStorage`.
-- Récupération et affichage de la liste des patientes via `GET /api/patients`.
-- Injection dynamique des cartes patientes avec :
-  - Nom, prénom, numéro de dossier, quartier.
-  - Niveau de risque (normal, modéré, élevé) avec badge coloré.
-- Déconnexion (suppression du token et retour à l’écran de connexion).
-- Gestion des erreurs (identifiants invalides, serveur indisponible).
+- **Cartes patientes enrichies** :
+  - Bordure gauche colorée selon le niveau de risque (rouge = élevé, orange = modéré, gris = normal).
+  - Badge de risque et badge de statut d’admission (travail actif / observation / post-partum).
+  - Bouton “Marquer comme critique” (⭐) avec persistance dans `localStorage`.
+  - Bouton “Voir détails” (prépare l’ouverture d’un modal).
+
+- **Statistiques en temps réel** :
+  - Nombre total de patientes.
+  - Nombre de patientes à risque élevé.
+  - Nombre de dossiers marqués comme critiques.
+
+- **Recherche par lot de vaccin** (interface prête, connexion à l’API).
+
+- **Gestion des erreurs et états vides**.
 
 #### Sécurité
 
@@ -97,6 +102,7 @@ Fonctionnalités :
 | Commit 6 | Portail patient (HTML/CSS/JS, onglets, upload, badges)            |
 | Commit 7 | Dashboard soignant – structure HTML/CSS                           |
 | Commit 8 | Dashboard soignant – connexion JWT et affichage des patientes     |
+| Commit 9 | Dashboard soignant – amélioration cartes, stats, marquage critique |
 
 > **Note** : Le commit 3 a été perdu lors d’une manipulation Git. L’ensemble de ses fonctionnalités (connexion DB, routes patients) est présent et opérationnel dans les commits 4, 5 et 6. Aucune régression n’est à signaler.
 
@@ -104,9 +110,9 @@ Fonctionnalités :
 
 ### État actuel
 
-**Statut :** Base de données terminée, API REST complète, portail patient opérationnel, dashboard soignant fonctionnel (connexion + affichage patientes).
+**Statut :** Base de données terminée, API REST complète, portail patient opérationnel, dashboard soignant avancé (cartographie des risques, statistiques, marquage critique).
 
-**Progression estimée :** 92 %
+**Progression estimée :** 94 %
 
 ---
 
