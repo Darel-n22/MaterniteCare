@@ -13,8 +13,8 @@
 
 <header class="appbar">
     <div class="appbar__brand">
-        <span class="appbar__logo" aria-hidden="true">+</span>
-        <div class="appbar__titles">
+        <img src="../logo.jpeg" alt="MaterniteCare" class="appbar__logo-img">
+        <div class="appbar__logo-text">
             <h1>MaterniteCare</h1>
             <p>Espace soignant · Monitoring</p>
         </div>
@@ -23,7 +23,7 @@
 </header>
 <div class="pulse-divider" aria-hidden="true">
     <svg viewBox="0 0 160 26" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0 13 H44 L54 4 L66 24 L76 13 H160 L204 13 L214 4 L226 24 L236 13 H320" fill="none" stroke="#D88C9A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M0 13 H44 L54 4 L66 24 L76 13 H160 L204 13 L214 4 L226 24 L236 13 H320" fill="none" stroke="#E87A3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 </div>
 
@@ -51,7 +51,7 @@
     <section id="dashboardZone" style="display: none;">
         <div class="carnet-header">
             <p class="carnet-header__eyebrow">Tableau de bord</p>
-            <h2>Bonjour, <span id="userName"></span></h2>
+            <h2>Bonjour, <span id="userName"></span> <span id="alertBadge" style="display:none; background:#E87A3E; color:white; border-radius:50%; padding:4px 10px; font-size:0.8rem; margin-left:10px;">0</span></h2>
             <div class="carnet-meta">
                 <span class="carnet-stamp" id="userRole"></span>
                 <span class="carnet-tag" id="userWorkspace"></span>

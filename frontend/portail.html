@@ -13,8 +13,8 @@
 
 <header class="appbar">
     <div class="appbar__brand">
-        <span class="appbar__logo" aria-hidden="true">+</span>
-        <div class="appbar__titles">
+        <img src="logo.jpeg" alt="MaterniteCare" class="appbar__logo-img">
+        <div class="appbar__logo-text">
             <h1>MaterniteCare</h1>
             <p>Carnet de suivi de grossesse</p>
         </div>
@@ -23,7 +23,7 @@
 </header>
 <div class="pulse-divider" aria-hidden="true">
     <svg viewBox="0 0 160 26" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0 13 H44 L54 4 L66 24 L76 13 H160 L204 13 L214 4 L226 24 L236 13 H320" fill="none" stroke="#D88C9A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M0 13 H44 L54 4 L66 24 L76 13 H160 L204 13 L214 4 L226 24 L236 13 H320" fill="none" stroke="#E87A3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
 </div>
 
@@ -33,19 +33,18 @@
     <section id="loginZone" class="login-card">
         <div class="login-card__icon" aria-hidden="true">🤰</div>
         <h2>Accédez à votre carnet</h2>
-        <p class="lead">Entrez le code dossier remis lors de votre première consultation pour suivre votre grossesse.</p>
+        <p class="lead">Entrez le code dossier remis lors de votre première consultation.</p>
 
         <label for="codeDossier">Code dossier</label>
-        <input type="text" id="codeDossier" placeholder="MAT-2026-001" autocomplete="off">
+        <input type="text" id="codeDossier" placeholder="MAT-2026-XXX" autocomplete="off">
         <div id="loginError" class="error"></div>
         <button type="button" id="btnLogin">Accéder à mon dossier</button>
 
-        <p class="info">💡 Votre code dossier figure sur votre fiche de première consultation (ex. MAT-2026-001).</p>
+        <p class="info">💡 Votre code dossier figure sur votre fiche de première consultation (ex. MAT-2026-XXX).</p>
     </section>
 
-    <!-- Dashboard patiente (caché au départ) -->
+    <!-- Dashboard patiente -->
     <section id="dashboardZone" style="display: none;">
-
         <div class="carnet-header">
             <p class="carnet-header__eyebrow">Bonjour</p>
             <h2 id="patientNom"></h2>
@@ -68,11 +67,38 @@
             <button type="button" class="tab" data-tab="upload" role="tab" aria-selected="false">
                 <span class="tab__icon" aria-hidden="true">📤</span> Déposer
             </button>
+            <button type="button" class="tab" data-tab="alertes" role="tab" aria-selected="false">
+                <span class="tab__icon" aria-hidden="true">🚨</span> Alertes
+            </button>
+            <button type="button" class="tab" data-tab="profil" role="tab" aria-selected="false">
+                <span class="tab__icon" aria-hidden="true">👤</span> Mon profil
+            </button>
         </nav>
 
         <div class="panel is-active" id="panel-rdv" role="tabpanel">
             <h3>Prochains rendez-vous</h3>
             <div id="rdvList" class="loading">Chargement…</div>
+
+            <div class="section">
+                <h4>➕ Prendre un rendez-vous</h4>
+                <label for="rdvType">Type de consultation</label>
+                <select id="rdvType" style="width:100%; margin-bottom:8px;">
+                    <option value="consultation_prenatale">Consultation prénatale</option>
+                    <option value="echographie">Échographie</option>
+                    <option value="bilan_sanguin">Bilan sanguin</option>
+                    <option value="vaccination">Vaccination</option>
+                    <option value="suivi_post_partum">Suivi post-partum</option>
+                </select>
+
+                <label for="rdvDate">Date et heure</label>
+                <input type="datetime-local" id="rdvDate" style="width:100%; margin-bottom:8px;">
+
+                <label for="rdvNotes">Notes (optionnel)</label>
+                <input type="text" id="rdvNotes" placeholder="Précisez votre motif..." style="width:100%; margin-bottom:8px;">
+
+                <button id="btnTakeRdv" style="background:#E87A3E; color:white;">Prendre rendez-vous</button>
+                <div id="rdvStatus" class="upload-feedback"></div>
+            </div>
         </div>
 
         <div class="panel" id="panel-vaccins" role="tabpanel">
@@ -89,6 +115,14 @@
             <h3>Déposer un examen</h3>
             <div class="upload-zone">
                 <div class="upload-zone__icon" aria-hidden="true">📤</div>
+                <label for="docType">Type de document</label>
+                <select id="docType" style="width:100%; margin-bottom: 8px;">
+                    <option value="echographie">🩻 Échographie</option>
+                    <option value="bilan_sanguin">🩸 Bilan sanguin</option>
+                    <option value="ordonnance">📝 Ordonnance</option>
+                    <option value="compte_rendu">📄 Compte rendu</option>
+                    <option value="autre">📁 Autre</option>
+                </select>
                 <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.pdf">
                 <p class="info">Formats acceptés : JPG, PNG, PDF.</p>
             </div>
@@ -96,6 +130,15 @@
             <div id="uploadStatus" class="upload-feedback"></div>
         </div>
 
+        <div class="panel" id="panel-alertes" role="tabpanel">
+            <h3>Mes alertes</h3>
+            <div id="alertesList" class="loading">Chargement…</div>
+        </div>
+
+        <div class="panel" id="panel-profil" role="tabpanel">
+            <h3>Mes informations personnelles</h3>
+            <div id="profilInfo" class="loading">Chargement…</div>
+        </div>
     </section>
 </main>
 
