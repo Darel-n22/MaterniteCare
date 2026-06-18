@@ -32,13 +32,10 @@ function authenticateToken(req, res, next) {
     });
 }
 
-// Connexion PostgreSQL
+// Connexion PostgreSQL (CORRIGÉE pour Render)
 const pool = new Pool({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false }
 });
 
 pool.connect((err) => {
@@ -648,7 +645,6 @@ app.post('/api/rendezvous', async (req, res) => {
         return res.status(400).json({ error: 'patiente_id, date_heure et type_rdv requis' });
     }
     try {
-        // Récupérer un personnel soignant par défaut (ou assigner automatiquement)
         const personnel = await pool.query('SELECT id_personnel FROM personnel_soignant LIMIT 1');
         const workspace = await pool.query('SELECT id_workspace FROM workspace WHERE type = \'consultations_prenatales\' LIMIT 1');
         const result = await pool.query(
@@ -693,7 +689,6 @@ app.get('/api/patients/:id/pdf', async (req, res) => {
     }
 
     try {
-        // Vérifier le token
         const decoded = jwt.verify(token, JWT_SECRET);
         if (!decoded) {
             return res.status(403).json({ error: 'Token invalide' });
@@ -712,11 +707,9 @@ app.get('/api/patients/:id/pdf', async (req, res) => {
         res.setHeader('Content-Disposition', `attachment; filename=dossier_${p.numero_dossier}.pdf`);
         doc.pipe(res);
 
-        // En-tête
         doc.fontSize(18).text('MaterniteCare - Dossier Patient', { align: 'center' });
         doc.moveDown();
 
-        // Identité
         doc.fontSize(14).text('Identité', { underline: true });
         doc.fontSize(11).text(`Nom : ${p.nom} ${p.prenom}`);
         doc.text(`Date de naissance : ${new Date(p.date_naissance).toLocaleDateString()}`);
@@ -724,7 +717,6 @@ app.get('/api/patients/:id/pdf', async (req, res) => {
         doc.text(`Dossier n° : ${p.numero_dossier}`);
         doc.moveDown();
 
-        // Grossesses
         if (grossesses.rows.length) {
             doc.fontSize(14).text('Grossesses', { underline: true });
             grossesses.rows.forEach(g => {
@@ -733,7 +725,6 @@ app.get('/api/patients/:id/pdf', async (req, res) => {
             doc.moveDown();
         }
 
-        // Admissions
         if (admissions.rows.length) {
             doc.fontSize(14).text('Admissions', { underline: true });
             admissions.rows.forEach(a => {
@@ -742,7 +733,6 @@ app.get('/api/patients/:id/pdf', async (req, res) => {
             doc.moveDown();
         }
 
-        // Ordonnances
         if (ordonnances.rows.length) {
             doc.fontSize(14).text('Ordonnances', { underline: true });
             ordonnances.rows.forEach(o => {
@@ -751,7 +741,6 @@ app.get('/api/patients/:id/pdf', async (req, res) => {
             doc.moveDown();
         }
 
-        // Accouchements
         if (accouchements.rows.length) {
             doc.fontSize(14).text('Accouchements', { underline: true });
             accouchements.rows.forEach(a => {
