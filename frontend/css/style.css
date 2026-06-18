@@ -1,26 +1,20 @@
 /* =====================================================================
    MaterniteCare — Portail Patiente
-   Direction : carnet de santé clinique + tracé de monitoring obstétrical (CTG)
-   Palette  : encre lagon (#16313D) · brume (#F2F6F5) · rose poudré (#D88C9A)
-             + accent corail (#E2A07E) pour les jalons de grossesse
+   Palette : Bleu marine (#0B2D4E) · Blanc · Corail (#E87A3E)
    ===================================================================== */
  
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap');
  
 :root {
-    --ink: #16313D;
-    --ink-soft: #5C7480;
-    --ink-faint: #93A6AE;
-    --rose: #D88C9A;
-    --rose-dark: #B8677A;
-    --coral: #E2A07E;
- 
-    --bg: #F2F6F5;
+    --ink: #0B2D4E;
+    --ink-soft: #3A5A7A;
+    --ink-faint: #7A9AB5;
+    --coral: #E87A3E;
+    --coral-dark: #D06A2E;
+    --bg: #F5F8FA;
     --surface: #FFFFFF;
-    --surface-tint: #FBFCFC;
-    --border: #E0E7E6;
-    --border-strong: #C9D4D3;
- 
+    --border: #DCE4EB;
+    --border-strong: #B8C9D9;
     --success: #2F8F63;
     --success-bg: #E3F4EC;
     --warning: #C9821E;
@@ -31,23 +25,17 @@
     --info-bg: #E8F1F8;
     --neutral: #6E7D87;
     --neutral-bg: #EEF1F2;
- 
-    --font-display: 'Sora', system-ui, sans-serif;
-    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
-    --font-mono: 'DM Mono', 'SFMono-Regular', monospace;
- 
+    --font-display: 'Sora', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'DM Mono', monospace;
     --radius: 16px;
     --radius-sm: 10px;
     --radius-lg: 22px;
- 
-    --shadow-card: 0 1px 2px rgba(22, 49, 61, 0.04), 0 8px 20px rgba(22, 49, 61, 0.05);
-    --shadow-raised: 0 4px 10px rgba(22, 49, 61, 0.07), 0 16px 32px rgba(22, 49, 61, 0.08);
+    --shadow-card: 0 1px 2px rgba(11,45,78,0.04), 0 8px 20px rgba(11,45,78,0.05);
+    --shadow-raised: 0 4px 10px rgba(11,45,78,0.07), 0 16px 32px rgba(11,45,78,0.08);
 }
  
-* {
-    box-sizing: border-box;
-}
- 
+* { box-sizing: border-box; }
 body {
     margin: 0;
     font-family: var(--font-body);
@@ -57,85 +45,67 @@ body {
 }
  
 /* ---------- Barre d'application ---------- */
- 
 .appbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    padding: 16px 20px;
+    padding: 12px 20px;
     background: var(--ink);
     color: #fff;
     position: sticky;
     top: 0;
     z-index: 10;
 }
- 
-.appbar__brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+.appbar__brand { display: flex; align-items: center; gap: 12px; }
+.appbar__logo-img {
+    height: 45px;
+    width: auto;
+    max-height: 45px;
+    object-fit: contain;
+    background: #fff;
+    padding: 4px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
- 
-.appbar__logo {
-    width: 38px;
-    height: 38px;
-    flex-shrink: 0;
-    display: grid;
-    place-items: center;
-    background: var(--rose);
-    border-radius: 11px;
-    color: var(--ink);
-    font-weight: 700;
-    font-size: 1.35rem;
+.appbar__logo-text { display: flex; flex-direction: column; line-height: 1.2; }
+.appbar__logo-text h1 {
     font-family: var(--font-display);
-    box-shadow: inset 0 -2px 0 rgba(22, 49, 61, 0.15);
-}
- 
-.appbar__titles h1 {
-    font-family: var(--font-display);
-    font-size: 1.12rem;
+    font-size: 1.1rem;
     font-weight: 700;
     margin: 0;
-    line-height: 1.2;
-    letter-spacing: -0.01em;
+    color: #fff;
 }
- 
-.appbar__titles p {
-    margin: 3px 0 0;
-    font-size: 0.68rem;
+.appbar__logo-text p {
+    margin: 0;
+    font-size: 0.6rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--coral);
     font-weight: 500;
 }
- 
 .btn-logout {
-    width: auto;
-    padding: 9px 16px;
-    margin: 0;
-    font-size: 0.78rem;
-    font-weight: 600;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
     color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 22px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.15s;
 }
+.btn-logout:hover { background: rgba(255,255,255,0.25); }
  
-.btn-logout:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
- 
-/* ---------- Tracé CTG (signature visuelle) ---------- */
- 
+/* ---------- Tracé CTG ---------- */
 .pulse-divider {
     height: 26px;
-    background-color: var(--ink);
+    background: var(--ink);
     border-radius: 0 0 20px 20px;
     overflow: hidden;
     position: relative;
 }
- 
 .pulse-divider svg {
     position: absolute;
     top: 0;
@@ -144,18 +114,13 @@ body {
     width: 200%;
     animation: pulse-scroll 14s linear infinite;
 }
- 
 @keyframes pulse-scroll {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
 }
+@media (prefers-reduced-motion: reduce) { .pulse-divider svg { animation: none; } }
  
-@media (prefers-reduced-motion: reduce) {
-    .pulse-divider svg { animation: none; }
-}
- 
-/* ---------- Mise en page générale ---------- */
- 
+/* ---------- Conteneur ---------- */
 .container {
     max-width: 480px;
     margin: 0 auto;
@@ -163,7 +128,6 @@ body {
 }
  
 /* ---------- Connexion ---------- */
- 
 .login-card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -174,7 +138,6 @@ body {
     text-align: center;
     position: relative;
 }
- 
 .login-card::before {
     content: "";
     position: absolute;
@@ -183,28 +146,24 @@ body {
     transform: translate(-50%, -50%);
     width: 56px;
     height: 4px;
-    background: var(--rose);
+    background: var(--coral);
     border-radius: 4px;
 }
- 
 .login-card__icon {
     width: 64px;
     height: 64px;
     margin: 0 auto 14px;
+    background: var(--coral);
+    border-radius: 50%;
     display: grid;
     place-items: center;
-    background: var(--rose);
-    border-radius: 50%;
     font-size: 1.7rem;
 }
- 
 .login-card h2 {
     font-family: var(--font-display);
     font-size: 1.34rem;
     margin: 0 0 8px;
-    letter-spacing: -0.01em;
 }
- 
 .login-card .lead {
     color: var(--ink-soft);
     font-size: 0.9rem;
@@ -213,113 +172,76 @@ body {
 }
  
 /* ---------- Champs & boutons ---------- */
- 
 label {
     display: block;
     text-align: left;
     font-size: 0.72rem;
     font-weight: 700;
-    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--ink-soft);
     margin-bottom: 8px;
 }
- 
 input[type="text"] {
     width: 100%;
     padding: 14px 16px;
     border-radius: var(--radius-sm);
     border: 1.5px solid var(--border);
-    font-size: 1rem;
     font-family: var(--font-mono);
-    letter-spacing: 0.04em;
     background: var(--bg);
     color: var(--ink);
     margin-bottom: 8px;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
- 
-input[type="text"]::placeholder {
-    color: var(--ink-faint);
-}
- 
 input[type="text"]:focus-visible {
     outline: none;
-    border-color: var(--rose);
-    box-shadow: 0 0 0 4px rgba(216, 140, 154, 0.18);
+    border-color: var(--coral);
+    box-shadow: 0 0 0 4px rgba(232,122,62,0.18);
 }
- 
 button {
     width: 100%;
     padding: 14px 16px;
     border-radius: var(--radius-sm);
     border: none;
-    font-size: 0.95rem;
     font-weight: 600;
     font-family: var(--font-body);
     cursor: pointer;
     background: var(--ink);
     color: #fff;
-    margin-bottom: 0;
-    transition: background 0.15s ease, transform 0.08s ease, box-shadow 0.15s ease;
-    box-shadow: 0 2px 8px rgba(22, 49, 61, 0.18);
+    transition: 0.15s;
+    box-shadow: 0 2px 8px rgba(11,45,78,0.18);
 }
- 
 button:hover {
-    background: #0F252F;
-    box-shadow: 0 4px 14px rgba(22, 49, 61, 0.22);
+    background: #062238;
+    box-shadow: 0 4px 14px rgba(11,45,78,0.22);
 }
- 
-button:active {
-    transform: scale(0.99);
-}
- 
-button:disabled {
-    opacity: 0.6;
-    cursor: wait;
-    box-shadow: none;
-}
- 
-button:focus-visible,
-.tab:focus-visible,
-input:focus-visible {
-    outline: 3px solid var(--rose);
-    outline-offset: 2px;
-}
+button:active { transform: scale(0.99); }
+button:focus-visible { outline: 3px solid var(--coral); outline-offset: 2px; }
  
 .error {
     color: var(--danger);
     font-size: 0.84rem;
     text-align: left;
-    min-height: 1.2em;
     margin: 0 0 6px;
-    font-weight: 500;
 }
- 
 .info {
     color: var(--ink-soft);
     font-size: 0.8rem;
     margin-top: 14px;
-    line-height: 1.55;
-    text-align: left;
     background: var(--bg);
     border-radius: var(--radius-sm);
     padding: 10px 12px;
 }
  
-/* ---------- En-tête "carnet" du tableau de bord ---------- */
- 
+/* ---------- Carnet header ---------- */
 .carnet-header {
     background: var(--ink);
     color: #fff;
     border-radius: var(--radius-lg);
-    padding: 22px 22px 20px;
+    padding: 22px;
     margin: 22px 0 18px;
     box-shadow: var(--shadow-raised);
     position: relative;
     overflow: hidden;
 }
- 
 .carnet-header::after {
     content: "";
     position: absolute;
@@ -328,66 +250,49 @@ input:focus-visible {
     width: 140px;
     height: 140px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(216, 140, 154, 0.28), transparent 70%);
+    background: radial-gradient(circle, rgba(232,122,62,0.28), transparent 70%);
 }
- 
 .carnet-header__eyebrow {
-    margin: 0;
     font-size: 0.7rem;
     font-weight: 700;
-    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--rose);
-    position: relative;
+    color: var(--coral);
+    margin: 0;
 }
- 
 .carnet-header h2 {
     font-family: var(--font-display);
     font-size: 1.5rem;
     margin: 6px 0 16px;
-    letter-spacing: -0.01em;
-    position: relative;
 }
- 
 .carnet-meta {
     display: flex;
-    align-items: center;
     gap: 10px;
     flex-wrap: wrap;
-    position: relative;
 }
- 
 .carnet-stamp {
     font-family: var(--font-mono);
     font-size: 0.76rem;
-    font-weight: 500;
-    border: 1.5px dashed rgba(216, 140, 154, 0.6);
-    color: var(--rose);
+    border: 1.5px dashed rgba(232,122,62,0.6);
+    color: var(--coral);
     padding: 6px 12px;
     border-radius: 8px;
-    display: inline-block;
 }
- 
 .carnet-tag {
     font-size: 0.78rem;
-    background: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.85);
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.85);
     padding: 6px 14px;
     border-radius: 20px;
-    font-weight: 500;
 }
  
 /* ---------- Onglets ---------- */
- 
 .tabs {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 8px;
     margin-bottom: 18px;
 }
- 
 .tab {
-    width: auto;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
@@ -395,56 +300,38 @@ input:focus-visible {
     text-align: center;
     font-size: 0.68rem;
     font-weight: 600;
-    font-family: var(--font-body);
     color: var(--ink-soft);
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 5px;
-    margin-bottom: 0;
     box-shadow: var(--shadow-card);
-    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.08s ease;
+    transition: 0.15s;
 }
- 
-.tab__icon {
-    font-size: 1.25rem;
-    line-height: 1;
-}
- 
+.tab__icon { font-size: 1.25rem; }
 .tab.is-active {
     background: var(--ink);
     border-color: var(--ink);
     color: #fff;
     box-shadow: var(--shadow-raised);
 }
- 
 .tab:hover:not(.is-active) {
-    border-color: var(--rose);
+    border-color: var(--coral);
     color: var(--ink);
     transform: translateY(-1px);
 }
  
-/* ---------- Panneaux & cartes ---------- */
- 
-.panel {
-    display: none;
-}
- 
+/* ---------- Panneaux ---------- */
+.panel { display: none; }
 .panel.is-active {
     display: block;
     animation: fadeIn 0.25s ease;
 }
- 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(6px); }
     to { opacity: 1; transform: translateY(0); }
 }
- 
-@media (prefers-reduced-motion: reduce) {
-    .panel.is-active { animation: none; }
-}
- 
 .panel h3 {
     font-family: var(--font-display);
     font-size: 1.08rem;
@@ -453,23 +340,16 @@ input:focus-visible {
     align-items: center;
     gap: 8px;
 }
- 
 .panel h3::before {
     content: "";
     display: block;
     width: 4px;
     height: 18px;
-    background: var(--rose);
+    background: var(--coral);
     border-radius: 2px;
 }
  
-.loading {
-    color: var(--ink-soft);
-    font-size: 0.88rem;
-    padding: 20px 0;
-    text-align: center;
-}
- 
+/* ---------- Cartes ---------- */
 .card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -480,40 +360,27 @@ input:focus-visible {
     font-size: 0.9rem;
     line-height: 1.5;
     box-shadow: var(--shadow-card);
-    transition: box-shadow 0.15s ease, transform 0.1s ease;
+    transition: 0.15s;
 }
- 
 .card:hover {
     box-shadow: var(--shadow-raised);
     transform: translateY(-1px);
 }
- 
 .card strong {
     font-family: var(--font-display);
     font-weight: 600;
     font-size: 0.96rem;
 }
- 
 .card .meta {
     color: var(--ink-soft);
     font-size: 0.8rem;
     margin-top: 8px;
 }
- 
-.card .meta-inline {
-    font-size: 0.8rem;
-    color: var(--ink-soft);
-    font-weight: 400;
-    font-family: var(--font-body);
-}
- 
 .card--success { border-left-color: var(--success); }
 .card--warning { border-left-color: var(--warning); }
 .card--danger  { border-left-color: var(--danger); }
 .card--info    { border-left-color: var(--info); }
 .card--neutral { border-left-color: var(--neutral); }
- 
-/* ---------- Badges de statut ---------- */
  
 .badge {
     display: inline-block;
@@ -522,18 +389,13 @@ input:focus-visible {
     font-size: 0.65rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
     margin-left: 6px;
-    vertical-align: middle;
 }
- 
 .badge--success { background: var(--success-bg); color: var(--success); }
 .badge--warning { background: var(--warning-bg); color: var(--warning); }
 .badge--danger  { background: var(--danger-bg);  color: var(--danger); }
 .badge--info    { background: var(--info-bg);    color: var(--info); }
 .badge--neutral { background: var(--neutral-bg); color: var(--ink-soft); }
- 
-/* ---------- États vides / erreurs ---------- */
  
 .empty-state {
     text-align: center;
@@ -543,17 +405,14 @@ input:focus-visible {
     background: var(--surface);
     border: 1.5px dashed var(--border-strong);
     border-radius: var(--radius);
-    line-height: 1.5;
 }
- 
 .empty-state__icon {
     font-size: 1.9rem;
     display: block;
     margin-bottom: 10px;
 }
  
-/* ---------- Dépôt de document ---------- */
- 
+/* ---------- Upload ---------- */
 .upload-zone {
     border: 1.5px dashed var(--border-strong);
     border-radius: var(--radius);
@@ -561,65 +420,107 @@ input:focus-visible {
     text-align: center;
     background: var(--surface);
     margin-bottom: 16px;
-    transition: border-color 0.15s ease, background 0.15s ease;
 }
- 
 .upload-zone:has(input:focus-visible) {
-    border-color: var(--rose);
+    border-color: var(--coral);
     background: var(--surface-tint);
 }
- 
 .upload-zone__icon {
     width: 52px;
     height: 52px;
     margin: 0 auto 12px;
-    display: grid;
-    place-items: center;
     background: var(--bg);
     border-radius: 50%;
+    display: grid;
+    place-items: center;
     font-size: 1.6rem;
 }
- 
 input[type="file"] {
     width: 100%;
     font-family: var(--font-body);
     font-size: 0.84rem;
     color: var(--ink-soft);
-    margin-bottom: 0;
 }
- 
 .upload-feedback {
     font-weight: 600;
     font-size: 0.88rem;
     text-align: center;
-    display: block;
     min-height: 1.2em;
     margin-top: 12px;
     color: var(--ink-soft);
 }
- 
 .upload-feedback--success { color: var(--success); }
 .upload-feedback--error { color: var(--danger); }
  
-/* ---------- Responsive (tablette) ---------- */
- 
-@media (min-width: 640px) {
-    .container {
-        max-width: 600px;
-        padding: 32px 24px 72px;
-    }
- 
-    .tabs {
-        gap: 10px;
-    }
- 
-    .tab {
-        font-size: 0.76rem;
-        padding: 14px 6px;
-    }
- 
-    .tab__icon {
-        font-size: 1.4rem;
-    }
+/* ---------- Toasts ---------- */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 360px;
+    width: 100%;
+}
+.toast {
+    padding: 14px 18px;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 500;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    animation: slideIn 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+.toast-success { background: #2F8F63; border-left: 4px solid #1f6b48; }
+.toast-error { background: #C94B45; border-left: 4px solid #a83832; }
+.toast-info { background: #3A77A8; border-left: 4px solid #2a5a82; }
+.toast-warning { background: #C9821E; border-left: 4px solid #a86919; }
+.toast-close {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.7);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0 4px;
+    width: auto;
+    box-shadow: none;
+}
+.toast-close:hover { color: #fff; background: none; transform: none; }
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
 }
  
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+    .appbar { padding: 12px 16px; flex-wrap: wrap; }
+    .appbar__logo-img { height: 35px; max-height: 35px; padding: 2px; }
+    .appbar__logo-text h1 { font-size: 0.95rem; }
+    .appbar__logo-text p { font-size: 0.55rem; }
+    .btn-logout { padding: 6px 12px; font-size: 0.7rem; }
+    .container { padding: 16px 12px 48px; }
+    .login-card { padding: 24px 16px; margin-top: 16px; }
+    .login-card__icon { width: 48px; height: 48px; font-size: 1.3rem; }
+    .login-card h2 { font-size: 1.15rem; }
+    .tabs { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .tab { font-size: 0.6rem; padding: 8px 4px; }
+    .tab__icon { font-size: 1rem; }
+    .carnet-header { padding: 16px; }
+    .carnet-header h2 { font-size: 1.2rem; }
+    .card { padding: 12px; font-size: 0.82rem; }
+    button { padding: 10px 14px; font-size: 0.85rem; }
+    input, select, textarea { padding: 10px 12px; font-size: 0.9rem; }
+    .upload-zone { padding: 18px 12px; }
+    .upload-zone__icon { width: 40px; height: 40px; font-size: 1.2rem; }
+    .toast-container { top: 10px; right: 10px; max-width: calc(100% - 20px); }
+    .toast { font-size: 0.8rem; padding: 12px 14px; }
+}
+@media (max-width: 480px) {
+    .tabs { grid-template-columns: repeat(2, 1fr); }
+}
