@@ -1,0 +1,191 @@
+        :root {
+            --ink: #0B2D4E;
+            --ink-soft: #3A5A7A;
+            --ink-faint: #7A9AB5;
+            --coral: #E87A3E;
+            --coral-dark: #D06A2E;
+            --bg: #F5F8FA;
+            --surface: #FFFFFF;
+            --border: #DCE4EB;
+            --font-display: 'Sora', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'DM Mono', monospace;
+            --shadow-card: 0 1px 2px rgba(11,45,78,0.04), 0 8px 20px rgba(11,45,78,0.08);
+            --shadow-raised: 0 4px 10px rgba(11,45,78,0.07), 0 24px 48px rgba(11,45,78,0.13);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--ink);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Header ── */
+        .appbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 24px;
+            background: var(--ink);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .appbar__brand { display: flex; align-items: center; gap: 12px; }
+        .appbar__logo-img {
+            height: 44px;
+            background: #fff;
+            padding: 4px;
+            border-radius: 6px;
+            object-fit: contain;
+        }
+        .appbar__logo-text h1 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+        }
+        .appbar__logo-text p {
+            font-size: 0.7rem;
+            color: var(--ink-faint);
+            margin-top: 1px;
+        }
+
+        /* ── ECG divider ── */
+        .pulse-divider { background: var(--ink); }
+        .pulse-divider svg { width: 100%; height: 26px; display: block; }
+
+        /* ── Hero ── */
+        .hero {
+            text-align: center;
+            padding: 52px 24px 28px;
+        }
+        .hero__eyebrow {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.14em;
+            color: var(--coral);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .hero__title {
+            font-family: var(--font-display);
+            font-size: clamp(1.7rem, 5vw, 2.6rem);
+            font-weight: 700;
+            color: var(--ink);
+            line-height: 1.15;
+            margin-bottom: 12px;
+        }
+        .hero__title span { color: var(--coral); }
+        .hero__sub {
+            font-size: 0.95rem;
+            color: var(--ink-soft);
+            max-width: 460px;
+            margin: 0 auto;
+            line-height: 1.65;
+        }
+
+        /* ── Cards ── */
+        .cards {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 40px 24px 72px;
+            max-width: 880px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: 20px;
+            padding: 36px 32px 30px;
+            flex: 1 1 300px;
+            max-width: 390px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 14px;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: var(--shadow-card);
+            transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-raised);
+            border-color: var(--coral);
+        }
+
+        .card__icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card__icon svg { width: 28px; height: 28px; }
+        .card--patiente .card__icon { background: #FEF0E8; color: var(--coral); }
+        .card--soignant .card__icon { background: #E8F1F8; color: #3A77A8; }
+
+        .card__badge {
+            font-family: var(--font-mono);
+            font-size: 0.63rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border-radius: 99px;
+            font-weight: 500;
+        }
+        .card--patiente .card__badge { background: #FEF0E8; color: var(--coral-dark); }
+        .card--soignant .card__badge { background: #E8F1F8; color: #3A77A8; }
+
+        .card__title {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--ink);
+        }
+        .card__desc {
+            font-size: 0.88rem;
+            color: var(--ink-soft);
+            line-height: 1.65;
+            flex: 1;
+        }
+
+        .card__cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 10px;
+            transition: background 0.15s;
+        }
+        .card__cta svg { width: 15px; height: 15px; }
+        .card--patiente .card__cta { background: var(--coral); color: #fff; }
+        .card--patiente:hover .card__cta { background: var(--coral-dark); }
+        .card--soignant .card__cta { background: var(--ink); color: #fff; }
+        .card--soignant:hover .card__cta { background: #0d3a62; }
+
+        /* ── Footer ── */
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 18px;
+            font-size: 0.76rem;
+            color: var(--ink-faint);
+            border-top: 1px solid var(--border);
+        }

@@ -17,7 +17,7 @@ function showToast(message, type = 'info') {
     toast.className = `toast toast-${type}`;
     toast.innerHTML = `
         <span>${message}</span>
-        <button class="toast-close">✕</button>
+        <button class="toast-close">&times;</button>
     `;
     toastContainer.appendChild(toast);
     toast.querySelector('.toast-close').addEventListener('click', () => {
@@ -173,8 +173,8 @@ function displayPatients(patients) {
                     <span class="badge ${risk.badge}">${risk.label}</span>
                     <span class="badge ${admission.badge}">${admission.label}</span>
                 </div>
-                <div>📁 ${p.numero_dossier} · ${p.quartier || '?'}</div>
-                <div>🤰 ${p.terme_actuel_sa || '?'} SA</div>
+                <div>[Dossier] ${p.numero_dossier} · ${p.quartier || '?'}</div>
+                <div> ${p.terme_actuel_sa || '?'} SA</div>
                 <button class="details-btn" data-id="${p.id_patiente}">Voir détails</button>
             </div>
         `;
@@ -228,7 +228,7 @@ async function showPatientDetails(patientId) {
             const constantes = await constRes.json();
             if (constantes.length) {
                 constantesHtml = constantes.map(c => `
-                    <p>📊 ${new Date(c.date_heure).toLocaleString()} : TA ${c.tension_systolique}/${c.tension_diastolique} mmHg, dilatation ${c.dilatation_col} cm, RCF ${c.frequence_cardiaque_foetale} bpm</p>
+                    <p>[Stat] ${new Date(c.date_heure).toLocaleString()} : TA ${c.tension_systolique}/${c.tension_diastolique} mmHg, dilatation ${c.dilatation_col} cm, RCF ${c.frequence_cardiaque_foetale} bpm</p>
                 `).join('');
             }
         }
@@ -305,7 +305,7 @@ function openModal(data, isError = false) {
 
     let inner;
     if (isError || !data) {
-        inner = '<div><p>❌ Impossible de charger les détails.</p></div>';
+        inner = '<div><p>[Erreur] Impossible de charger les détails.</p></div>';
     } else {
         const p = data.patiente;
         const g = data.grossesse;
@@ -319,7 +319,7 @@ function openModal(data, isError = false) {
                         <div class="meta">${doc.type_document || 'Document'} · Déposé le ${new Date(doc.date_upload).toLocaleDateString('fr-FR')}</div>
                     </div>
                     <button class="doc-download-btn" data-file="${doc.chemin_fichier}" data-titre="${doc.titre}" style="background: #3A77A8; color: white; border: none; padding: 6px 12px; border-radius: 20px; cursor: pointer; width: auto; margin: 0;">
-                        📥 Télécharger
+                        Télécharger Télécharger
                     </button>
                 </div>
             `).join('')
@@ -329,20 +329,20 @@ function openModal(data, isError = false) {
         const alertesHtml = data.alertes && data.alertes.length
             ? data.alertes.map(a => `
                 <div class="card card--neutral" style="border-left-color: ${a.priorite === 'eleve' ? '#dc2626' : '#f97316'};">
-                    <strong>🚨 ${a.type_alerte}</strong>
+                    <strong>[!] ${a.type_alerte}</strong>
                     <div class="meta">${a.description} · ${new Date(a.date_creation).toLocaleDateString('fr-FR')}</div>
                     <span class="badge ${a.statut === 'traitee' ? 'badge--success' : 'badge--danger'}">${a.statut}</span>
-                    ${a.statut === 'non_traitee' ? `<button class="traiter-alerte-btn" data-id="${a.id_alerte}" style="background:#3A77A8; color:white; border:none; padding:4px 10px; border-radius:20px; cursor:pointer; width:auto; margin-left:8px;">✅ Traiter</button>` : ''}
+                    ${a.statut === 'non_traitee' ? `<button class="traiter-alerte-btn" data-id="${a.id_alerte}" style="background:#3A77A8; color:white; border:none; padding:4px 10px; border-radius:20px; cursor:pointer; width:auto; margin-left:8px;">[OK] Traiter</button>` : ''}
                 </div>
             `).join('')
             : '<p>Aucune alerte.</p>';
 
         inner = `
             <h3>${p.prenom} ${p.nom}</h3>
-            <p class="modal-subtitle">📁 ${p.numero_dossier} · ${p.quartier || '?'}</p>
+            <p class="modal-subtitle">[Dossier] ${p.numero_dossier} · ${p.quartier || '?'}</p>
 
             <div class="modal-section">
-                <h4>📋 Identité et coordonnées</h4>
+                <h4> Identité et coordonnées</h4>
                 <p><strong>Nom :</strong> ${p.nom} ${p.prenom}</p>
                 <p><strong>Date de naissance :</strong> ${new Date(p.date_naissance).toLocaleDateString()}</p>
                 <p><strong>Téléphone :</strong> ${p.telephone || '-'}</p>
@@ -355,7 +355,7 @@ function openModal(data, isError = false) {
             </div>
 
             <div class="modal-section">
-                <h4>✏️ Modifier les informations</h4>
+                <h4> Modifier les informations</h4>
                 <input type="text" id="editQuartier" placeholder="Quartier" value="${p.quartier || ''}">
                 <input type="text" id="editTelephone" placeholder="Téléphone" value="${p.telephone || ''}">
                 <textarea id="editAntecedents" placeholder="Antécédents médicaux">${p.antecedents_medicaux || ''}</textarea>
@@ -363,23 +363,23 @@ function openModal(data, isError = false) {
             </div>
 
             <div class="modal-section">
-                <h4>📄 Exporter le dossier</h4>
-                <button id="exportPdfBtn" style="background:#1e3a5f; color:white; width:100%;">📄 Exporter en PDF</button>
+                <h4> Exporter le dossier</h4>
+                <button id="exportPdfBtn" style="background:#1e3a5f; color:white; width:100%;"> Exporter en PDF</button>
             </div>
 
             ${g ? `
             <div class="modal-section">
-                <h4>⚠️ Niveau de risque</h4>
+                <h4>[!] Niveau de risque</h4>
                 <select id="risqueSelect">
                     <option value="normal" ${g.niveau_risque === 'normal' ? 'selected' : ''}>Normal (gris)</option>
                     <option value="modere" ${g.niveau_risque === 'modere' ? 'selected' : ''}>Modéré (orange)</option>
                     <option value="eleve" ${g.niveau_risque === 'eleve' ? 'selected' : ''}>Élevé (rouge)</option>
                 </select>
                 <button id="updateRisqueBtn" data-grossesse="${g.id_grossesse}">Mettre à jour</button>
-            </div>` : '<p>⚠️ Aucune grossesse en cours pour définir un risque.</p>'}
+            </div>` : '<p>[!] Aucune grossesse en cours pour définir un risque.</p>'}
 
             <div class="modal-section">
-                <h4>➕ Hospitalisation</h4>
+                <h4>+ Hospitalisation</h4>
                 <select id="workspaceSelect">
                     <option value="a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11">Consultations</option>
                     <option value="a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12">Bloc obstétrical</option>
@@ -390,12 +390,12 @@ function openModal(data, isError = false) {
             </div>
 
             <div class="modal-section">
-                <h4>🚨 Alertes</h4>
+                <h4>[!] Alertes</h4>
                 ${alertesHtml}
             </div>
 
             <div class="modal-section">
-                <h4>📄 Documents de la patiente</h4>
+                <h4> Documents de la patiente</h4>
                 ${docHtml}
             </div>
 
@@ -403,7 +403,7 @@ function openModal(data, isError = false) {
                 <h4>Constantes vitales</h4>
                 ${data.constantes}
                 <div class="modal-section">
-                    <h5>➕ Ajouter des constantes</h5>
+                    <h5>+ Ajouter des constantes</h5>
                     <input type="number" id="taSys" placeholder="TA systolique (mmHg)">
                     <input type="number" id="taDia" placeholder="TA diastolique (mmHg)">
                     <input type="number" id="pouls" placeholder="Pouls (bpm)">
@@ -418,7 +418,7 @@ function openModal(data, isError = false) {
             <div class="modal-section">
                 <h4>Ordonnances</h4>
                 ${data.ordonnances.length ? data.ordonnances.map(o => `
-                    <p>📝 ${new Date(o.date_prescription).toLocaleDateString()} : ${o.contenu}</p>
+                    <p> ${new Date(o.date_prescription).toLocaleDateString()} : ${o.contenu}</p>
                 `).join('') : '<p>Aucune ordonnance</p>'}
                 <textarea id="newOrdonnance" placeholder="Nouvelle prescription" rows="2"></textarea>
                 <button id="prescrireBtn">Prescrire</button>
@@ -427,7 +427,7 @@ function openModal(data, isError = false) {
             <div class="modal-section">
                 <h4>Accouchements</h4>
                 ${data.accouchements.length ? data.accouchements.map(acc => `
-                    <p>📅 ${new Date(acc.date_heure_accouchement).toLocaleDateString()} - ${acc.type_accouchement} (${acc.duree_travail_minutes || '?'} min)</p>
+                    <p> ${new Date(acc.date_heure_accouchement).toLocaleDateString()} - ${acc.type_accouchement} (${acc.duree_travail_minutes || '?'} min)</p>
                 `).join('') : '<p>Aucun accouchement</p>'}
                 <button id="addAccouchementBtn">Enregistrer un accouchement</button>
                 <div id="accouchementForm" style="display:none; margin-top:10px;">
@@ -445,7 +445,7 @@ function openModal(data, isError = false) {
         `;
     }
 
-    overlay.innerHTML = `<div class="modal"><button class="modal-close">✕</button>${inner}</div>`;
+    overlay.innerHTML = `<div class="modal"><button class="modal-close">&times;</button>${inner}</div>`;
     document.body.appendChild(overlay);
     overlay.querySelector('.modal-close').addEventListener('click', closeModal);
 

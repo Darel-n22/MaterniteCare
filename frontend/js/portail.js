@@ -15,7 +15,7 @@ function showToast(message, type = 'info') {
     toast.className = `toast toast-${type}`;
     toast.innerHTML = `
         <span>${message}</span>
-        <button class="toast-close">✕</button>
+        <button class="toast-close">&times;</button>
     `;
     toastContainer.appendChild(toast);
     toast.querySelector('.toast-close').addEventListener('click', () => {
@@ -57,11 +57,11 @@ function rappelInfo(dateStr) {
 // Icône selon le type de document
 function documentIcon(type) {
     switch(type) {
-        case 'echographie': return '🩻';
-        case 'bilan_sanguin': return '🩸';
-        case 'ordonnance': return '📝';
-        case 'compte_rendu': return '📄';
-        default: return '📁';
+        case 'echographie': return 'Écho';
+        case 'bilan_sanguin': return 'Bilan';
+        case 'ordonnance': return '';
+        case 'compte_rendu': return '';
+        default: return '[Dossier]';
     }
 }
 
@@ -90,7 +90,7 @@ loginBtn.addEventListener('click', async () => {
         currentPatient = patient;
         document.getElementById('patientNom').innerText = `${patient.prenom} ${patient.nom}`;
         document.getElementById('patientDossier').innerText = patient.numero_dossier;
-        document.getElementById('patientQuartier').innerText = `📍 ${patient.quartier || 'Quartier non renseigné'}`;
+        document.getElementById('patientQuartier').innerText = ` ${patient.quartier || 'Quartier non renseigné'}`;
 
         await loadRendezVous(patient.id_patiente);
         await loadVaccinations(patient.id_patiente);
@@ -119,7 +119,7 @@ async function loadRendezVous(patienteId) {
         if (!res.ok) throw new Error();
         const rdvs = await res.json();
         if (rdvs.length === 0) {
-            container.innerHTML = '<div class="empty-state"><span class="empty-state__icon">📅</span>Aucun rendez-vous programmé.</div>';
+            container.innerHTML = '<div class="empty-state"><span class="empty-state__icon"></span>Aucun rendez-vous programmé.</div>';
             return;
         }
         container.innerHTML = rdvs.map(rdv => {
@@ -128,12 +128,12 @@ async function loadRendezVous(patienteId) {
                 <div class="card ${cardClassFromBadge(badge)}">
                     <strong>${rdv.type_rdv}</strong>
                     <span class="badge ${badge}">${rdv.statut}</span>
-                    <div class="meta">📅 ${new Date(rdv.date_heure).toLocaleString('fr-FR', { dateStyle: 'medium', timeStyle: 'short' })}</div>
+                    <div class="meta"> ${new Date(rdv.date_heure).toLocaleString('fr-FR', { dateStyle: 'medium', timeStyle: 'short' })}</div>
                 </div>
             `;
         }).join('');
     } catch (err) {
-        container.innerHTML = '<div class="empty-state"><span class="empty-state__icon">⚠️</span>Impossible de charger les rendez-vous.</div>';
+        container.innerHTML = '<div class="empty-state"><span class="empty-state__icon">[!]</span>Impossible de charger les rendez-vous.</div>';
     }
 }
 
@@ -165,15 +165,15 @@ document.getElementById('btnTakeRdv').addEventListener('click', async () => {
         });
         const data = await res.json();
         if (res.ok) {
-            showToast('✅ Rendez-vous pris avec succès !', 'success');
+            showToast('[OK] Rendez-vous pris avec succès !', 'success');
             document.getElementById('rdvDate').value = '';
             document.getElementById('rdvNotes').value = '';
             loadRendezVous(currentPatient.id_patiente);
         } else {
-            showToast('❌ Erreur : ' + (data.error || 'Échec de la prise de RDV'), 'error');
+            showToast('[Erreur] Erreur : ' + (data.error || 'Échec de la prise de RDV'), 'error');
         }
     } catch (err) {
-        showToast('❌ Erreur de connexion au serveur', 'error');
+        showToast('[Erreur] Erreur de connexion au serveur', 'error');
     }
 });
 
@@ -186,14 +186,14 @@ async function loadVaccinations(patienteId) {
         if (!res.ok) throw new Error();
         const vaccins = await res.json();
         if (vaccins.length === 0) {
-            container.innerHTML = '<div class="empty-state"><span class="empty-state__icon">💉</span>Aucune vaccination enregistrée.</div>';
+            container.innerHTML = '<div class="empty-state"><span class="empty-state__icon"></span>Aucune vaccination enregistrée.</div>';
             return;
         }
         container.innerHTML = vaccins.map(v => {
             const rappel = rappelInfo(v.prochain_rappel);
             return `
                 <div class="card ${cardClassFromBadge(rappel.cls)}">
-                    <strong>💉 ${v.type_vaccin}</strong>${v.dose ? ` <span class="meta-inline">· ${v.dose}</span>` : ''}
+                    <strong> ${v.type_vaccin}</strong>${v.dose ? ` <span class="meta-inline">· ${v.dose}</span>` : ''}
                     <span class="badge ${rappel.cls}">${rappel.label}</span>
                     <div class="meta">
                         Administré le ${new Date(v.date_vaccination).toLocaleDateString('fr-FR')}<br>
@@ -203,7 +203,7 @@ async function loadVaccinations(patienteId) {
             `;
         }).join('');
     } catch (err) {
-        container.innerHTML = '<div class="empty-state"><span class="empty-state__icon">⚠️</span>Impossible de charger les vaccinations.</div>';
+        container.innerHTML = '<div class="empty-state"><span class="empty-state__icon">[!]</span>Impossible de charger les vaccinations.</div>';
     }
 }
 
@@ -216,7 +216,7 @@ async function loadDocuments(patienteId) {
         if (!res.ok) throw new Error();
         const docs = await res.json();
         if (docs.length === 0) {
-            container.innerHTML = '<div class="empty-state"><span class="empty-state__icon">📄</span>Aucun document déposé.</div>';
+            container.innerHTML = '<div class="empty-state"><span class="empty-state__icon"></span>Aucun document déposé.</div>';
             return;
         }
         container.innerHTML = docs.map(doc => `
@@ -226,7 +226,7 @@ async function loadDocuments(patienteId) {
             </div>
         `).join('');
     } catch (err) {
-        container.innerHTML = '<div class="empty-state"><span class="empty-state__icon">⚠️</span>Impossible de charger les documents.</div>';
+        container.innerHTML = '<div class="empty-state"><span class="empty-state__icon">[!]</span>Impossible de charger les documents.</div>';
     }
 }
 
@@ -241,19 +241,19 @@ async function loadAlertesPatient() {
         const alertes = await res.json();
         container.className = '';
         if (alertes.length === 0) {
-            container.innerHTML = '<div class="empty-state"><span class="empty-state__icon">✅</span>Aucune alerte pour le moment.</div>';
+            container.innerHTML = '<div class="empty-state"><span class="empty-state__icon">[OK]</span>Aucune alerte pour le moment.</div>';
             return;
         }
         container.innerHTML = alertes.map(a => `
             <div class="card ${a.statut === 'traitee' ? 'card--success' : 'card--danger'}" style="border-left-color: ${a.priorite === 'eleve' ? '#dc2626' : '#f97316'};">
-                <strong>🚨 ${a.type_alerte}</strong>
+                <strong>[!] ${a.type_alerte}</strong>
                 <div class="meta">${a.description} · ${new Date(a.date_creation).toLocaleDateString('fr-FR')}</div>
-                <span class="badge ${a.statut === 'traitee' ? 'badge--success' : 'badge--danger'}">${a.statut === 'traitee' ? '✅ Traitée' : '⏳ En attente'}</span>
+                <span class="badge ${a.statut === 'traitee' ? 'badge--success' : 'badge--danger'}">${a.statut === 'traitee' ? '[OK] Traitée' : '⏳ En attente'}</span>
             </div>
         `).join('');
     } catch (err) {
         container.className = '';
-        container.innerHTML = '<div class="empty-state"><span class="empty-state__icon">⚠️</span>Impossible de charger vos alertes.</div>';
+        container.innerHTML = '<div class="empty-state"><span class="empty-state__icon">[!]</span>Impossible de charger vos alertes.</div>';
     }
 }
 
@@ -282,7 +282,7 @@ async function loadProfil() {
         `;
     } catch (err) {
         container.className = '';
-        container.innerHTML = '<div class="empty-state"><span class="empty-state__icon">⚠️</span>Impossible de charger votre profil.</div>';
+        container.innerHTML = '<div class="empty-state"><span class="empty-state__icon">[!]</span>Impossible de charger votre profil.</div>';
     }
 }
 
@@ -309,15 +309,15 @@ document.getElementById('btnUpload').addEventListener('click', async () => {
         });
         const data = await res.json();
         if (res.ok) {
-            showToast('✅ Document envoyé avec succès !', 'success');
+            showToast('[OK] Document envoyé avec succès !', 'success');
             fileInput.value = '';
             document.getElementById('docType').value = 'autre';
             loadDocuments(currentPatient.id_patiente);
         } else {
-            showToast('❌ Erreur : ' + (data.error || 'Échec de l\'upload'), 'error');
+            showToast('[Erreur] Erreur : ' + (data.error || 'Échec de l\'upload'), 'error');
         }
     } catch (err) {
-        showToast('❌ Erreur de connexion au serveur', 'error');
+        showToast('[Erreur] Erreur de connexion au serveur', 'error');
     }
 });
 
