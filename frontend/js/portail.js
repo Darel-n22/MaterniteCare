@@ -1,4 +1,4 @@
-const API_URL = 'https://maternitecare-api.onrender.com/';
+const API_URL = 'https://maternitecare-api.onrender.com';
 let currentPatient = null;
 
 // ---------- NOTIFICATIONS TOAST ----------
