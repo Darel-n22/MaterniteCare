@@ -1,4 +1,4 @@
-const API_URL = 'https://maternitecare-backend.onrender.com';
+const API_URL = 'https://maternitecare-api.onrender.com/';
 let token = null;
 let currentUser = null;
 let allPatients = [];
