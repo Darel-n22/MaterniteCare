@@ -28,6 +28,22 @@ function showToast(message, type = 'info') {
     }, 5000);
 }
 
+// ---------- ICÔNES SVG ----------
+const Icons = {
+    folder: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>`,
+    baby: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="6" r="3"/><path d="M12 9v4"/><path d="M8 13a4 4 0 0 1 8 0"/><path d="M6 16a6 6 0 0 1 12 0"/></svg>`,
+    stats: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>`,
+    document: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>`,
+    download: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`,
+    alert: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+    prescription: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="14" y2="11"/></svg>`,
+    delivery: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12H4"/><path d="M12 6v12"/><circle cx="12" cy="12" r="10"/></svg>`,
+    bed: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"/><path d="M2 10V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4"/><circle cx="6" cy="12" r="1"/><circle cx="18" cy="12" r="1"/></svg>`,
+    edit: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`,
+    user: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+    calendar: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`
+};
+
 // Éléments DOM
 const loginBtn = document.getElementById('btnLogin');
 const logoutBtn = document.getElementById('btnLogout');
@@ -173,8 +189,8 @@ function displayPatients(patients) {
                     <span class="badge ${risk.badge}">${risk.label}</span>
                     <span class="badge ${admission.badge}">${admission.label}</span>
                 </div>
-                <div>[Dossier] ${p.numero_dossier} · ${p.quartier || '?'}</div>
-                <div> ${p.terme_actuel_sa || '?'} SA</div>
+                <div>${Icons.folder} ${p.numero_dossier} · ${p.quartier || '?'}</div>
+                <div>${Icons.baby} ${p.terme_actuel_sa || '?'} SA</div>
                 <button class="details-btn" data-id="${p.id_patiente}">Voir détails</button>
             </div>
         `;
@@ -228,7 +244,7 @@ async function showPatientDetails(patientId) {
             const constantes = await constRes.json();
             if (constantes.length) {
                 constantesHtml = constantes.map(c => `
-                    <p>[Stat] ${new Date(c.date_heure).toLocaleString()} : TA ${c.tension_systolique}/${c.tension_diastolique} mmHg, dilatation ${c.dilatation_col} cm, RCF ${c.frequence_cardiaque_foetale} bpm</p>
+                    <p>${Icons.stats} ${new Date(c.date_heure).toLocaleString()} : TA ${c.tension_systolique}/${c.tension_diastolique} mmHg, dilatation ${c.dilatation_col} cm, RCF ${c.frequence_cardiaque_foetale} bpm</p>
                 `).join('');
             }
         }
@@ -254,7 +270,7 @@ async function showPatientDetails(patientId) {
             const lits = await litsRes.json();
             litHtml = `
                 <div class="modal-section">
-                    <h4>Attribution du lit</h4>
+                    <h4>${Icons.bed} Attribution du lit</h4>
                     <select id="litSelect">
                         <option value="">-- Choisir --</option>
                         ${lits.filter(l => l.est_disponible).map(lit => `<option value="${lit.id_lit}">${lit.numero_lit} (${lit.type_lit})</option>`).join('')}
@@ -305,7 +321,7 @@ function openModal(data, isError = false) {
 
     let inner;
     if (isError || !data) {
-        inner = '<div><p>[Erreur] Impossible de charger les détails.</p></div>';
+        inner = '<div><p>❌ Impossible de charger les détails.</p></div>';
     } else {
         const p = data.patiente;
         const g = data.grossesse;
@@ -315,11 +331,11 @@ function openModal(data, isError = false) {
             ? data.documents.map(doc => `
                 <div class="card card--neutral" style="border-left-color: #3A77A8; display: flex; justify-content: space-between; align-items: center;">
                     <div>
-                        <strong>${doc.titre}</strong>
+                        <strong>${Icons.document} ${doc.titre}</strong>
                         <div class="meta">${doc.type_document || 'Document'} · Déposé le ${new Date(doc.date_upload).toLocaleDateString('fr-FR')}</div>
                     </div>
                     <button class="doc-download-btn" data-file="${doc.chemin_fichier}" data-titre="${doc.titre}" style="background: #3A77A8; color: white; border: none; padding: 6px 12px; border-radius: 20px; cursor: pointer; width: auto; margin: 0;">
-                        Télécharger Télécharger
+                        ${Icons.download} Télécharger
                     </button>
                 </div>
             `).join('')
@@ -329,20 +345,20 @@ function openModal(data, isError = false) {
         const alertesHtml = data.alertes && data.alertes.length
             ? data.alertes.map(a => `
                 <div class="card card--neutral" style="border-left-color: ${a.priorite === 'eleve' ? '#dc2626' : '#f97316'};">
-                    <strong>[!] ${a.type_alerte}</strong>
+                    <strong>${Icons.alert} ${a.type_alerte}</strong>
                     <div class="meta">${a.description} · ${new Date(a.date_creation).toLocaleDateString('fr-FR')}</div>
                     <span class="badge ${a.statut === 'traitee' ? 'badge--success' : 'badge--danger'}">${a.statut}</span>
-                    ${a.statut === 'non_traitee' ? `<button class="traiter-alerte-btn" data-id="${a.id_alerte}" style="background:#3A77A8; color:white; border:none; padding:4px 10px; border-radius:20px; cursor:pointer; width:auto; margin-left:8px;">[OK] Traiter</button>` : ''}
+                    ${a.statut === 'non_traitee' ? `<button class="traiter-alerte-btn" data-id="${a.id_alerte}" style="background:#3A77A8; color:white; border:none; padding:4px 10px; border-radius:20px; cursor:pointer; width:auto; margin-left:8px;">Traiter</button>` : ''}
                 </div>
             `).join('')
             : '<p>Aucune alerte.</p>';
 
         inner = `
             <h3>${p.prenom} ${p.nom}</h3>
-            <p class="modal-subtitle">[Dossier] ${p.numero_dossier} · ${p.quartier || '?'}</p>
+            <p class="modal-subtitle">${Icons.folder} ${p.numero_dossier} · ${p.quartier || '?'}</p>
 
             <div class="modal-section">
-                <h4> Identité et coordonnées</h4>
+                <h4>${Icons.user} Identité et coordonnées</h4>
                 <p><strong>Nom :</strong> ${p.nom} ${p.prenom}</p>
                 <p><strong>Date de naissance :</strong> ${new Date(p.date_naissance).toLocaleDateString()}</p>
                 <p><strong>Téléphone :</strong> ${p.telephone || '-'}</p>
@@ -355,7 +371,7 @@ function openModal(data, isError = false) {
             </div>
 
             <div class="modal-section">
-                <h4> Modifier les informations</h4>
+                <h4>${Icons.edit} Modifier les informations</h4>
                 <input type="text" id="editQuartier" placeholder="Quartier" value="${p.quartier || ''}">
                 <input type="text" id="editTelephone" placeholder="Téléphone" value="${p.telephone || ''}">
                 <textarea id="editAntecedents" placeholder="Antécédents médicaux">${p.antecedents_medicaux || ''}</textarea>
@@ -363,23 +379,23 @@ function openModal(data, isError = false) {
             </div>
 
             <div class="modal-section">
-                <h4> Exporter le dossier</h4>
-                <button id="exportPdfBtn" style="background:#1e3a5f; color:white; width:100%;"> Exporter en PDF</button>
+                <h4>${Icons.document} Exporter le dossier</h4>
+                <button id="exportPdfBtn" style="background:#1e3a5f; color:white; width:100%;">Exporter en PDF</button>
             </div>
 
             ${g ? `
             <div class="modal-section">
-                <h4>[!] Niveau de risque</h4>
+                <h4>${Icons.alert} Niveau de risque</h4>
                 <select id="risqueSelect">
                     <option value="normal" ${g.niveau_risque === 'normal' ? 'selected' : ''}>Normal (gris)</option>
                     <option value="modere" ${g.niveau_risque === 'modere' ? 'selected' : ''}>Modéré (orange)</option>
                     <option value="eleve" ${g.niveau_risque === 'eleve' ? 'selected' : ''}>Élevé (rouge)</option>
                 </select>
                 <button id="updateRisqueBtn" data-grossesse="${g.id_grossesse}">Mettre à jour</button>
-            </div>` : '<p>[!] Aucune grossesse en cours pour définir un risque.</p>'}
+            </div>` : '<p>⚠️ Aucune grossesse en cours pour définir un risque.</p>'}
 
             <div class="modal-section">
-                <h4>+ Hospitalisation</h4>
+                <h4>${Icons.bed} Hospitalisation</h4>
                 <select id="workspaceSelect">
                     <option value="a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11">Consultations</option>
                     <option value="a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12">Bloc obstétrical</option>
@@ -390,20 +406,20 @@ function openModal(data, isError = false) {
             </div>
 
             <div class="modal-section">
-                <h4>[!] Alertes</h4>
+                <h4>${Icons.alert} Alertes</h4>
                 ${alertesHtml}
             </div>
 
             <div class="modal-section">
-                <h4> Documents de la patiente</h4>
+                <h4>${Icons.document} Documents de la patiente</h4>
                 ${docHtml}
             </div>
 
             <div class="modal-section">
-                <h4>Constantes vitales</h4>
+                <h4>${Icons.stats} Constantes vitales</h4>
                 ${data.constantes}
                 <div class="modal-section">
-                    <h5>+ Ajouter des constantes</h5>
+                    <h5>Ajouter des constantes</h5>
                     <input type="number" id="taSys" placeholder="TA systolique (mmHg)">
                     <input type="number" id="taDia" placeholder="TA diastolique (mmHg)">
                     <input type="number" id="pouls" placeholder="Pouls (bpm)">
@@ -416,18 +432,18 @@ function openModal(data, isError = false) {
             </div>
 
             <div class="modal-section">
-                <h4>Ordonnances</h4>
+                <h4>${Icons.prescription} Ordonnances</h4>
                 ${data.ordonnances.length ? data.ordonnances.map(o => `
-                    <p> ${new Date(o.date_prescription).toLocaleDateString()} : ${o.contenu}</p>
+                    <p>${Icons.prescription} ${new Date(o.date_prescription).toLocaleDateString()} : ${o.contenu}</p>
                 `).join('') : '<p>Aucune ordonnance</p>'}
                 <textarea id="newOrdonnance" placeholder="Nouvelle prescription" rows="2"></textarea>
                 <button id="prescrireBtn">Prescrire</button>
             </div>
 
             <div class="modal-section">
-                <h4>Accouchements</h4>
+                <h4>${Icons.delivery} Accouchements</h4>
                 ${data.accouchements.length ? data.accouchements.map(acc => `
-                    <p> ${new Date(acc.date_heure_accouchement).toLocaleDateString()} - ${acc.type_accouchement} (${acc.duree_travail_minutes || '?'} min)</p>
+                    <p>${Icons.delivery} ${new Date(acc.date_heure_accouchement).toLocaleDateString()} - ${acc.type_accouchement} (${acc.duree_travail_minutes || '?'} min)</p>
                 `).join('') : '<p>Aucun accouchement</p>'}
                 <button id="addAccouchementBtn">Enregistrer un accouchement</button>
                 <div id="accouchementForm" style="display:none; margin-top:10px;">
@@ -460,13 +476,13 @@ function openModal(data, isError = false) {
     });
 
     // Export PDF
-const exportBtn = overlay.querySelector('#exportPdfBtn');
-if (exportBtn) {
-    exportBtn.addEventListener('click', () => {
-        const url = `${API_URL}/api/patients/${data.patientId}/pdf?token=${token}`;
-        window.open(url, '_blank');
-    });
-}
+    const exportBtn = overlay.querySelector('#exportPdfBtn');
+    if (exportBtn) {
+        exportBtn.addEventListener('click', () => {
+            const url = `${API_URL}/api/patients/${data.patientId}/pdf?token=${token}`;
+            window.open(url, '_blank');
+        });
+    }
 
     // Gestion du traitement des alertes
     overlay.querySelectorAll('.traiter-alerte-btn').forEach(btn => {

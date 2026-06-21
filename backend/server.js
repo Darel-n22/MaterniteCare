@@ -755,7 +755,24 @@ app.get('/api/patients/:id/pdf', async (req, res) => {
         res.status(500).json({ error: 'Erreur serveur' });
     }
 });
-
+// Récupérer les alertes d'une patiente (PUBLIC – pour le portail)
+app.get('/api/patient/alertes/:codeDossier', async (req, res) => {
+    const { codeDossier } = req.params;
+    try {
+        const patient = await pool.query('SELECT id_patiente FROM patiente WHERE numero_dossier = $1', [codeDossier]);
+        if (patient.rows.length === 0) {
+            return res.status(404).json({ error: 'Code dossier invalide' });
+        }
+        const result = await pool.query(
+            'SELECT * FROM alertes WHERE patiente_id = $1 ORDER BY date_creation DESC',
+            [patient.rows[0].id_patiente]
+        );
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Erreur serveur' });
+    }
+});
 // Démarrer le serveur
 const PORT = process.env.PORT || 3003;
 app.listen(PORT, () => {
